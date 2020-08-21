@@ -1,0 +1,2 @@
+# GameManagerReact
+Created with CodeSandbox
