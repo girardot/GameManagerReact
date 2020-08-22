@@ -22,6 +22,7 @@ import { ToBuyListView } from "./components/games/ToBuyList";
 import { Reducers } from "./redux/Reducers";
 import "./styles.css";
 import { idGenerator } from "./components/utils/idGenerator";
+import { useStore } from "react-redux";
 
 // import { Dispatch as ReduxDispatch } from "redux";
 const nextConsoleId = idGenerator(0);
@@ -49,38 +50,15 @@ const styles = makeStyles((theme) => ({
 let store = createStore(Reducers);
 
 export const App = () => {
-  const [consoles, setConsoles] = React.useState([]);
-
   const menus = ["List", "Todo", "Tobuy"];
   const [menu, setMenu] = React.useState(menus.indexOf("List"));
-
-  const handleDelete = (consoleId: number) => {
-    console.log("Delete console" + consoleId);
-    const index = consoles.findIndex(
-      (console: ConsoleType) => console.id === consoleId
-    );
-    consoles.splice(index, 1);
-    setConsoles([...consoles]);
-  };
-
-  const handleAddNewConsole = (consoleName: string) => {
-    const consoleId = nextConsoleId();
-    console.log(consoleId + consoleName);
-    setConsoles([...consoles, { id: consoleId, name: consoleName }]);
-  };
 
   const classes = styles();
   let menuView;
 
   switch (menus[menu]) {
     case "List":
-      menuView = (
-        <ConsolesView
-          consoles={consoles}
-          onDelete={handleDelete}
-          addNewConsole={handleAddNewConsole}
-        />
-      );
+      menuView = <ConsolesView />;
       break;
     case "Todo":
       menuView = <ToDoListView />;

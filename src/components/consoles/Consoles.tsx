@@ -7,37 +7,23 @@ import { ConsoleType } from "./ConsoleType";
 import { ConsoleView } from "./Console2";
 import { NewConsoleView } from "./NewConsole";
 import { GameFilterView } from "../games/GameFilter";
-import { Actions } from "../../redux/Actions";
-//import { useStore } from "react-redux";
+import { Actions, ConsolesAction } from "../../redux/Actions";
 import { connect } from "react-redux";
 
 type ConsolesViewProperties = {
   consoles: ConsoleType[];
-  onDelete: (consoleId: number) => void;
-  addNewConsole: (consoleName: string) => void;
-  dispatch?: Function;
+  addNewConsole?: (consoleName: string) => void;
+  deleteConsole?: (consoleId: number) => void;
 };
 
 const ConsolesView = (props: ConsolesViewProperties) => {
   const consoles = props.consoles;
   // TODO
-  //const store = useStore();
-  // const consoles: ConsoleType[] = store.getState();
-  // console.log("store" + store.getState());
   const filterGames = (searchValue: string) => {
     console.log("filter " + searchValue);
   };
   const unfilter = () => {
     console.log("unfilter ");
-  };
-
-  const onDelete = (consoleId: number) => {
-    console.log("onDelete " + consoleId);
-    //store.dispatch(Actions.removeConsole(consoleId));
-    if (props.dispatch) {
-      console.log("ondelete dispatch");
-      props.dispatch(Actions.removeConsole(consoleId));
-    }
   };
 
   const nextGameId = idGenerator(0);
@@ -53,16 +39,17 @@ const ConsolesView = (props: ConsolesViewProperties) => {
           </ListSubheader>
         }
       >
-        {consoles.map((console: ConsoleType, index: number) => (
-          <ConsoleView
-            id={console.id}
-            key={index}
-            name={console.name}
-            nextGameId={nextGameId}
-            // onDelete={() => props.onDelete(console.id)}
-            onDelete={() => onDelete(console.id)}
-          />
-        ))}
+        {consoles.map
+          ? consoles.map((console: ConsoleType, index: number) => (
+              <ConsoleView
+                id={console.id}
+                key={index}
+                name={console.name}
+                nextGameId={nextGameId}
+                onDelete={() => props.deleteConsole(console.id)}
+              />
+            ))
+          : ""}
       </List>
       <NewConsoleView addNewConsole={props.addNewConsole} />
     </div>
@@ -89,17 +76,27 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onTodoClick: id => {
-      dispatch(toggleTodo(id))
-    }
-  }
-}
-
  connect(mapStateToProps, mapDispatchToProps)(TodoList)
-
 
 */
 
-export default connect((state: any) => state)(ConsolesView);
+const mapStateToProps = (consoles: ConsoleType[]) => {
+  console.log(consoles)
+ return {
+    consoles: consoles
+  };
+};
+const mapDispatchToProps = (
+  dispatch: (consolesAction: ConsolesAction) => void
+) => {
+  return {
+    deleteConsole: (consoleId: number) => {
+      dispatch(Actions.removeConsole(consoleId));
+    },
+    addNewConsole: (consoleName: string) => {
+      dispatch(Actions.addNewConsole(consoleName));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConsolesView);

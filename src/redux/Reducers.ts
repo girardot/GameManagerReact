@@ -13,13 +13,12 @@ const defaultConsoles: ConsoleType[] = [
   { id: nextConsoleId(), name: "rc4" }
 ];
 const consolesReducer = (
-  state: any = defaultConsoles,
+  consoles: ConsoleType[] = defaultConsoles,
   action: ConsolesAction
 ) => {
-  console.log("consolesReducer" + state);
-
-  /*  const newConsoles = { ...consoles };
+  const newConsoles = [...consoles];
   console.log("consolesReducer" + action.type);
+  console.log(consoles);
   switch (action.type) {
     case "REMOVE_CONSOLE":
       const consoleId = action.id;
@@ -28,11 +27,14 @@ const consolesReducer = (
       );
       newConsoles.splice(index, 1);
       break;
+    case "ADD_CONSOLE":
+      newConsoles.push({ id: action.id, name: action.name ? action.name : "" });
+      break;
+
     default:
       return consoles;
   }
-  return newConsoles;*/
-  return state;
+  return newConsoles;
 };
 
 export const Reducers = combineReducers({ consolesReducer });
