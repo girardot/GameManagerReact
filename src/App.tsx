@@ -15,8 +15,8 @@ import ListIcon from "@material-ui/icons/List";
 import React from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { ConsoleType } from "./components/consoles/Console2";
-import { ConsolesView } from "./components/consoles/Consoles";
+import { ConsoleType } from "./components/consoles/ConsoleType";
+import ConsolesView from "./components/consoles/Consoles";
 import { ToDoListView } from "./components/games/ToDoList";
 import { ToBuyListView } from "./components/games/ToBuyList";
 import { Reducers } from "./redux/Reducers";
@@ -24,6 +24,7 @@ import "./styles.css";
 import { idGenerator } from "./components/utils/idGenerator";
 
 // import { Dispatch as ReduxDispatch } from "redux";
+const nextConsoleId = idGenerator(0);
 
 const theme = createMuiTheme({
   palette: {
@@ -45,17 +46,10 @@ const styles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4)
   }
 }));
-const nextConsoleId = idGenerator(0);
-const defaultConsoles = [
-  { id: nextConsoleId(), name: "rc1" },
-  { id: nextConsoleId(), name: "rc2" },
-  { id: nextConsoleId(), name: "rc3" },
-  { id: nextConsoleId(), name: "rc4" }
-];
-let store = createStore(Reducers, defaultConsoles);
+let store = createStore(Reducers);
 
 export const App = () => {
-  const [consoles, setConsoles] = React.useState(defaultConsoles);
+  const [consoles, setConsoles] = React.useState([]);
 
   const menus = ["List", "Todo", "Tobuy"];
   const [menu, setMenu] = React.useState(menus.indexOf("List"));

@@ -1,9 +1,24 @@
-import { ConsoleType } from "../components/consoles/Console2";
+import { ConsoleType } from "../components/consoles/ConsoleType";
 import { combineReducers } from "redux";
 import { ConsolesAction } from "./Actions";
 
-const consolesReducer = (consoles: ConsoleType[], action: ConsolesAction) => {
-  const newConsoles = { ...consoles };
+import { idGenerator } from "../components/utils/idGenerator";
+
+const nextConsoleId = idGenerator(0);
+
+const defaultConsoles: ConsoleType[] = [
+  { id: nextConsoleId(), name: "rc1" },
+  { id: nextConsoleId(), name: "rc2" },
+  { id: nextConsoleId(), name: "rc3" },
+  { id: nextConsoleId(), name: "rc4" }
+];
+const consolesReducer = (
+  state: any = defaultConsoles,
+  action: ConsolesAction
+) => {
+  console.log("consolesReducer" + state);
+
+  /*  const newConsoles = { ...consoles };
   console.log("consolesReducer" + action.type);
   switch (action.type) {
     case "REMOVE_CONSOLE":
@@ -16,7 +31,8 @@ const consolesReducer = (consoles: ConsoleType[], action: ConsolesAction) => {
     default:
       return consoles;
   }
-  return newConsoles;
+  return newConsoles;*/
+  return state;
 };
 
-export const Reducers = () => combineReducers({ consolesReducer });
+export const Reducers = combineReducers({ consolesReducer });

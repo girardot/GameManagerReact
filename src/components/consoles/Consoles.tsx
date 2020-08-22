@@ -3,12 +3,12 @@ import { ListSubheader } from "@material-ui/core";
 import List from "@material-ui/core/List";
 import * as React from "react";
 import { idGenerator } from "../utils/idGenerator";
-
-import { ConsoleType, ConsoleView } from "./Console2";
+import { ConsoleType } from "./ConsoleType";
+import { ConsoleView } from "./Console2";
 import { NewConsoleView } from "./NewConsole";
 import { GameFilterView } from "../games/GameFilter";
 import { Actions } from "../../redux/Actions";
-import { useStore } from "react-redux";
+//import { useStore } from "react-redux";
 import { connect } from "react-redux";
 
 type ConsolesViewProperties = {
@@ -18,7 +18,7 @@ type ConsolesViewProperties = {
   dispatch?: Function;
 };
 
-export const ConsolesView = (props: ConsolesViewProperties) => {
+const ConsolesView = (props: ConsolesViewProperties) => {
   const consoles = props.consoles;
   // TODO
   //const store = useStore();
@@ -34,7 +34,10 @@ export const ConsolesView = (props: ConsolesViewProperties) => {
   const onDelete = (consoleId: number) => {
     console.log("onDelete " + consoleId);
     //store.dispatch(Actions.removeConsole(consoleId));
-   // props.dispatch(Actions.removeConsole(consoleId));
+    if (props.dispatch) {
+      console.log("ondelete dispatch");
+      props.dispatch(Actions.removeConsole(consoleId));
+    }
   };
 
   const nextGameId = idGenerator(0);
@@ -65,5 +68,38 @@ export const ConsolesView = (props: ConsolesViewProperties) => {
     </div>
   );
 };
+// TODO for filter
+
+/*
+const getVisibleTodos = (todos, filter) => {
+  switch (filter) {
+    case 'SHOW_COMPLETED':
+      return todos.filter(t => t.completed)
+    case 'SHOW_ACTIVE':
+      return todos.filter(t => !t.completed)
+    case 'SHOW_ALL':
+    default:
+      return todos
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    todos: getVisibleTodos(state.todos, state.visibilityFilter)
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTodoClick: id => {
+      dispatch(toggleTodo(id))
+    }
+  }
+}
+
+ connect(mapStateToProps, mapDispatchToProps)(TodoList)
+
+
+*/
 
 export default connect((state: any) => state)(ConsolesView);

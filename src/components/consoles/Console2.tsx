@@ -12,10 +12,6 @@ import { GameType } from "../games/Game";
 import { GamesView } from "../games/Games";
 import Collapse from "@material-ui/core/Collapse";
 
-export type ConsoleType = {
-  id: number;
-  name: string;
-};
 type ConsoleViewProperties = {
   id: number;
   name: string;
@@ -66,26 +62,30 @@ export const ConsoleView = (props: ConsoleViewProperties) => {
     setGames(updatedGames);
   };
 
-  const changeDemate = (gameId: number, demate: boolean) => {
-    console.log("Change demate " + demate + " for game " + gameId);
+  const changeDemate = (gameId: number, isDemate: boolean) => {
+    console.log("Change isDemate " + isDemate + " for game " + gameId);
 
     const updatedGames = [...games];
-    const gameToUpdate = updatedGames.find(
+    const gameToUpdate: GameType | undefined = updatedGames.find(
       (game: GameType) => game.id === gameId
     );
-    gameToUpdate.demate = demate;
-    setGames(updatedGames);
+    if (gameToUpdate) {
+      gameToUpdate.isDemate = isDemate;
+      setGames(updatedGames);
+    }
   };
 
   const changeProgress = (gameId: number, progress: number) => {
     console.log("Change progress " + progress + " for game " + gameId);
 
     const updatedGames = [...games];
-    const gameToUpdate = updatedGames.find(
+    const gameToUpdate: GameType | undefined = updatedGames.find(
       (game: GameType) => game.id === gameId
     );
-    gameToUpdate.progress = progress;
-    setGames(updatedGames);
+    if (gameToUpdate) {
+      gameToUpdate.progress = progress;
+      setGames(updatedGames);
+    }
   };
 
   const [open, setOpen] = React.useState(false);
