@@ -80,10 +80,11 @@ const mapStateToProps = state => {
 
 */
 
-const mapStateToProps = (consoles: ConsoleType[]) => {
-  console.log(consoles)
- return {
-    consoles: consoles
+const mapStateToProps = (consoles: any) => {
+  console.log(mapStateToProps);
+  console.log(consoles.consolesReducer);
+  return {
+    consoles: consoles.consolesReducer
   };
 };
 const mapDispatchToProps = (
