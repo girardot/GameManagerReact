@@ -113,12 +113,11 @@ const ConsoleView = (props: ConsoleViewProperties) => {
   );
 };
 
-const mapStateToProps = (consoleState: any) => {
-  console.log("CONSOLE2 mapStateToProps");
-  console.log(consoleState);
-
+const mapStateToProps = (consoles: any) => {
+  console.log(mapStateToProps);
+  console.log(consoles.consolesReducer);
   return {
-    console: consoleState.gamesReducer
+    consoles: consoles.consolesReducer
   };
 };
 

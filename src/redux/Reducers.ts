@@ -16,12 +16,14 @@ const defaultConsoles: ConsoleType[] = [
 
 const consolesReducer = (
   consoles: ConsoleType[] = defaultConsoles,
-  consoleAction: ConsolesAction
+  action: ConsolesAction | GamesAction
 ) => {
   const newConsoles = [...consoles];
-  console.log("consolesReducer" + consoleAction.type);
+  console.log("consolesReducer" + action.type);
+  const consoleAction: ConsolesAction = action;
+  const gameAction: GamesAction = action;
 
-  switch (consoleAction.type) {
+  switch (action.type) {
     case "REMOVE_CONSOLE":
       const index = newConsoles.findIndex(
         (console: ConsoleType) => console.id === consoleAction.id
@@ -36,28 +38,10 @@ const consolesReducer = (
       };
       newConsoles.push(newConsole);
       break;
-    default:
-      return consoles;
-  }
-  return newConsoles;
-};
-
-const defaultConsole: ConsoleType = {
-  id: nextId(),
-  name: "default c",
-  games: []
-};
-
-const gamesReducer = (
-  consoleState: ConsoleType = defaultConsole,
-  gameAction: GamesAction
-) => {
-  const newConsole = { ...consoleState };
-  console.log("gamesReducer" + gameAction.type);
-  console.log(gameAction);
-
-  switch (gameAction.type) {
     case "ADD_GAME":
+      const consoleType = newConsoles.find(
+        (console: ConsoleType) => console.id === gameAction.consoleId
+      );
       const newGame: GameType = {
         id: nextId(),
         name: gameAction.name,
@@ -65,7 +49,9 @@ const gamesReducer = (
         isDemate: false,
         toDoOrder: 0
       };
-      newConsole.games.push(newGame);
+      if (consoleType) {
+        consoleType.games.push(newGame);
+      }
       break;
     case "REMOVE_GAME":
       //TODO
@@ -77,9 +63,9 @@ const gamesReducer = (
       // TODO
       break;
     default:
-      return consoleState;
+      return consoles;
   }
-  return newConsole;
+  return newConsoles;
 };
 
-export const Reducers = combineReducers({ consolesReducer, gamesReducer });
+export const Reducers = combineReducers({ consolesReducer });
