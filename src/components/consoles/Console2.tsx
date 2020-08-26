@@ -11,55 +11,41 @@ import React from "react";
 import { GameType } from "../games/Game";
 import { GamesView } from "../games/Games";
 import Collapse from "@material-ui/core/Collapse";
+import { connect } from "react-redux";
+import { ConsoleType } from "./ConsoleType";
+import { Actions, GamesAction } from "../../redux/Actions";
 
 type ConsoleViewProperties = {
   id: number;
   name: string;
   onDelete: () => void;
-  nextGameId: () => number;
+  console: ConsoleType;
+  removeGame?: (gameId: number) => void;
+  addNewGame?: (consoleId: number, newGameName: string) => void;
+  changeGameDemate?: (gameId: number, isDemate: boolean) => void;
+  changeGameProgress?: (gameId: number, progress: number) => void;
 };
 
-export const ConsoleView = (props: ConsoleViewProperties) => {
-  const defaultGames: GameType[] = [
-    {
-      id: props.nextGameId(),
-      name: "G1",
-      isDemate: true,
-      progress: 20,
-      toDoOrder: 5
-    },
-    {
-      id: props.nextGameId(),
-      name: "G2",
-      isDemate: false,
-      progress: 60,
-      toDoOrder: 3
-    }
-  ];
-
-  const [games, setGames] = React.useState(defaultGames);
+const ConsoleView = (props: ConsoleViewProperties) => {
+  let consoleState: ConsoleType;
+  let games: GameType[] = [];
+  console.log(props.console.id + " === " + props.id);
+  if (props.console.id === props.id) {
+    consoleState = props.console;
+    games = consoleState && consoleState.games ? props.console.games : [];
+  }
 
   const addNewGame = (newGameName: string) => {
-    setGames([
-      ...games,
-      {
-        id: props.nextGameId(),
-        name: newGameName,
-        progress: 0,
-        isDemate: false,
-        toDoOrder: 0
-      }
-    ]);
+    console.log("addNewGame" + consoleState);
+    if (props.addNewGame && consoleState) {
+      props.addNewGame(consoleState.id, newGameName);
+    }
   };
 
   const deleteGame = (gameId: number) => {
-    console.log("Delete game " + gameId);
-    const updatedGames = [...games];
-    const index = updatedGames.findIndex(
-      (game: GameType) => game.id === gameId
-    );
-    updatedGames.splice(index, 1);
-    setGames(updatedGames);
+    if (props.removeGame && consoleState) {
+      props.removeGame(gameId);
+    }
   };
 
   const changeDemate = (gameId: number, isDemate: boolean) => {
@@ -71,7 +57,7 @@ export const ConsoleView = (props: ConsoleViewProperties) => {
     );
     if (gameToUpdate) {
       gameToUpdate.isDemate = isDemate;
-      setGames(updatedGames);
+      //setGames(updatedGames);
     }
   };
 
@@ -84,7 +70,7 @@ export const ConsoleView = (props: ConsoleViewProperties) => {
     );
     if (gameToUpdate) {
       gameToUpdate.progress = progress;
-      setGames(updatedGames);
+      // setGames(updatedGames);
     }
   };
 
@@ -126,3 +112,31 @@ export const ConsoleView = (props: ConsoleViewProperties) => {
     </div>
   );
 };
+
+const mapStateToProps = (consoleState: any) => {
+  console.log("CONSOLE2 mapStateToProps");
+  console.log(consoleState);
+
+  return {
+    console: consoleState.gamesReducer
+  };
+};
+
+const mapDispatchToProps = (dispatch: (gamesAction: GamesAction) => void) => {
+  return {
+    removeGame: (gameId: number) => {
+      dispatch(Actions.removeGame(gameId));
+    },
+    addNewGame: (consoleId: number, newGameName: string) => {
+      dispatch(Actions.addNewGame(consoleId, newGameName));
+    },
+    changeGameDemate: (gameId: number, isDemate: boolean) => {
+      dispatch(Actions.changeGameDemate(gameId, isDemate));
+    },
+    changeGameProgress: (gameId: number, progress: number) => {
+      dispatch(Actions.changeGameProgress(gameId, progress));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConsoleView);

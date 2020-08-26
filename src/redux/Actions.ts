@@ -1,4 +1,12 @@
-export type ConsolesAction = { type: string; id: number; name?: string };
+export type Action = { type: string; id?: number };
+
+export type ConsolesAction = Action & { name?: string };
+export type GamesAction = Action & {
+  consoleId?: number;
+  name?: string;
+  isDemate?: boolean;
+  progress?: number;
+};
 
 const removeConsole = (consoleId: number): ConsolesAction => {
   return {
@@ -10,12 +18,46 @@ const removeConsole = (consoleId: number): ConsolesAction => {
 const addNewConsole = (newConsoleName: string): ConsolesAction => {
   return {
     type: "ADD_CONSOLE",
-    id: 36, //TODO
     name: newConsoleName
+  };
+};
+
+const addNewGame = (consoleId: number, newGameName: string): GamesAction => {
+  return {
+    type: "ADD_GAME",
+    consoleId: consoleId,
+    name: newGameName
+  };
+};
+
+const removeGame = (gameId: number): GamesAction => {
+  return {
+    type: "REMOVE_GAME",
+    id: gameId
+  };
+};
+
+const changeGameDemate = (gameId: number, isDemate: boolean): GamesAction => {
+  return {
+    type: "CHANGE_GAME_DEMATE",
+    id: gameId,
+    isDemate: isDemate
+  };
+};
+
+const changeGameProgress = (gameId: number, progress: number): GamesAction => {
+  return {
+    type: "CHANGE_GAME_PROGRESS",
+    id: gameId,
+    progress: progress
   };
 };
 
 export const Actions = {
   removeConsole: removeConsole,
-  addNewConsole: addNewConsole
+  addNewConsole: addNewConsole,
+  removeGame: removeGame,
+  addNewGame: addNewGame,
+  changeGameDemate: changeGameDemate,
+  changeGameProgress: changeGameProgress
 };

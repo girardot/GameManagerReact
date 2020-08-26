@@ -2,9 +2,8 @@ import { ListSubheader } from "@material-ui/core";
 
 import List from "@material-ui/core/List";
 import * as React from "react";
-import { idGenerator } from "../utils/idGenerator";
 import { ConsoleType } from "./ConsoleType";
-import { ConsoleView } from "./Console2";
+import ConsoleView from "./Console2";
 import { NewConsoleView } from "./NewConsole";
 import { GameFilterView } from "../games/GameFilter";
 import { Actions, ConsolesAction } from "../../redux/Actions";
@@ -38,7 +37,6 @@ const ConsolesView = (props: ConsolesViewProperties) => {
     }
   };
 
-  const nextGameId = idGenerator(0);
   return (
     <div>
       <GameFilterView filterGames={filterGames} unfilter={unfilter} />
@@ -57,7 +55,7 @@ const ConsolesView = (props: ConsolesViewProperties) => {
                 id={console.id}
                 key={index}
                 name={console.name}
-                nextGameId={nextGameId}
+                console={console}
                 onDelete={() => deleteConsole(console.id)}
               />
             ))
