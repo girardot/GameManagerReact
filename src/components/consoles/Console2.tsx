@@ -20,7 +20,7 @@ type ConsoleViewProperties = {
   name: string;
   onDelete: () => void;
   console: ConsoleType;
-  removeGame?: (gameId: number) => void;
+  removeGame?: (consoleId: number, gameId: number) => void;
   addNewGame?: (consoleId: number, newGameName: string) => void;
   changeGameDemate?: (gameId: number, isDemate: boolean) => void;
   changeGameProgress?: (gameId: number, progress: number) => void;
@@ -29,14 +29,12 @@ type ConsoleViewProperties = {
 const ConsoleView = (props: ConsoleViewProperties) => {
   let consoleState: ConsoleType;
   let games: GameType[] = [];
-  console.log(props.console.id + " === " + props.id);
   if (props.console.id === props.id) {
     consoleState = props.console;
     games = consoleState && consoleState.games ? props.console.games : [];
   }
 
   const addNewGame = (newGameName: string) => {
-    console.log("addNewGame" + consoleState);
     if (props.addNewGame && consoleState) {
       props.addNewGame(consoleState.id, newGameName);
     }
@@ -44,7 +42,7 @@ const ConsoleView = (props: ConsoleViewProperties) => {
 
   const deleteGame = (gameId: number) => {
     if (props.removeGame && consoleState) {
-      props.removeGame(gameId);
+      props.removeGame(consoleState.id, gameId);
     }
   };
 
@@ -123,8 +121,8 @@ const mapStateToProps = (consoles: any) => {
 
 const mapDispatchToProps = (dispatch: (gamesAction: GamesAction) => void) => {
   return {
-    removeGame: (gameId: number) => {
-      dispatch(Actions.removeGame(gameId));
+    removeGame: (consoleId: number, gameId: number) => {
+      dispatch(Actions.removeGame(consoleId, gameId));
     },
     addNewGame: (consoleId: number, newGameName: string) => {
       dispatch(Actions.addNewGame(consoleId, newGameName));

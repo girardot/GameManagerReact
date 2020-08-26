@@ -30,9 +30,10 @@ const addNewGame = (consoleId: number, newGameName: string): GamesAction => {
   };
 };
 
-const removeGame = (gameId: number): GamesAction => {
+const removeGame = (consoleId: number, gameId: number): GamesAction => {
   return {
     type: "REMOVE_GAME",
+    consoleId: consoleId,
     id: gameId
   };
 };

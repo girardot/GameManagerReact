@@ -39,22 +39,39 @@ const consolesReducer = (
       newConsoles.push(newConsole);
       break;
     case "ADD_GAME":
-      const consoleType = newConsoles.find(
-        (console: ConsoleType) => console.id === gameAction.consoleId
-      );
-      const newGame: GameType = {
-        id: nextId(),
-        name: gameAction.name,
-        progress: 0,
-        isDemate: false,
-        toDoOrder: 0
-      };
-      if (consoleType) {
-        consoleType.games.push(newGame);
+      {
+        let consoleToUpdate = newConsoles.find(
+          (console: ConsoleType) => console.id === gameAction.consoleId
+        );
+        const newGame: GameType = {
+          id: nextId(),
+          name: gameAction.name,
+          progress: 0,
+          isDemate: false,
+          toDoOrder: 0
+        };
+        if (consoleToUpdate) {
+          consoleToUpdate.games.push(newGame);
+        }
       }
+
       break;
     case "REMOVE_GAME":
-      //TODO
+      {
+        let consoleToUpdate = newConsoles.find(
+          (console: ConsoleType) => console.id === gameAction.consoleId
+        );
+
+        if (consoleToUpdate) {
+          const gameIndexToRemove = consoleToUpdate.games.findIndex(
+            (game: GameType) => game.id === gameAction.id
+          );
+          if (gameIndexToRemove) {
+            consoleToUpdate.games.splice(gameIndexToRemove, 1);
+          }
+        }
+      }
+
       break;
     case "CHANGE_GAME_DEMATE":
       //TODO
