@@ -15,17 +15,11 @@ import ListIcon from "@material-ui/icons/List";
 import React from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { ConsoleType } from "./components/consoles/ConsoleType";
 import ConsolesView from "./components/consoles/Consoles";
 import { ToDoListView } from "./components/games/ToDoList";
 import { ToBuyListView } from "./components/games/ToBuyList";
 import { Reducers } from "./redux/Reducers";
 import "./styles.css";
-import { idGenerator } from "./components/utils/idGenerator";
-import { useStore } from "react-redux";
-
-// import { Dispatch as ReduxDispatch } from "redux";
-const nextConsoleId = idGenerator(0);
 
 const theme = createMuiTheme({
   palette: {

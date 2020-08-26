@@ -26,6 +26,12 @@ const ConsolesView = (props: ConsolesViewProperties) => {
     console.log("unfilter ");
   };
 
+  const addNewConsole = (consoleName: string) => {
+    if (props.addNewConsole) {
+      props.addNewConsole(consoleName);
+    }
+  };
+
   const nextGameId = idGenerator(0);
   return (
     <div>
@@ -51,7 +57,7 @@ const ConsolesView = (props: ConsolesViewProperties) => {
             ))
           : ""}
       </List>
-      <NewConsoleView addNewConsole={props.addNewConsole} />
+      <NewConsoleView addNewConsole={addNewConsole} />
     </div>
   );
 };
