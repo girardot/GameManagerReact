@@ -11,7 +11,9 @@ type GameFilterViewProperties = {
 export const GameFilterView = (props: GameFilterViewProperties) => {
   const [searchValue, setSearchValue] = React.useState("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const updatedSearchValue = event.currentTarget.value;
     console.log("handleChange updatedSearchValue :" + updatedSearchValue);
     setSearchValue(updatedSearchValue);
