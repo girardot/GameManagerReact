@@ -32,6 +32,12 @@ const ConsolesView = (props: ConsolesViewProperties) => {
     }
   };
 
+  const deleteConsole = (consoleId: number) => {
+    if (props.deleteConsole) {
+      props.deleteConsole(consoleId);
+    }
+  };
+
   const nextGameId = idGenerator(0);
   return (
     <div>
@@ -52,7 +58,7 @@ const ConsolesView = (props: ConsolesViewProperties) => {
                 key={index}
                 name={console.name}
                 nextGameId={nextGameId}
-                onDelete={() => props.deleteConsole(console.id)}
+                onDelete={() => deleteConsole(console.id)}
               />
             ))
           : ""}
