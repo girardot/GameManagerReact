@@ -1,7 +1,7 @@
 import { ConsoleType } from "../components/consoles/ConsoleType";
-import { GameType } from "../games/Game";
+import { GameType } from "../components/games/Game";
 import { combineReducers } from "redux";
-import { Action, ConsolesAction, GamesAction } from "./Actions";
+import { ConsolesAction, GamesAction } from "./Actions";
 
 import { idGenerator } from "../components/utils/idGenerator";
 
@@ -45,7 +45,7 @@ const consolesReducer = (
         );
         const newGame: GameType = {
           id: nextId(),
-          name: gameAction.name,
+          name: gameAction.name ? gameAction.name : "...",
           progress: 0,
           isDemate: false,
           toDoOrder: 0
