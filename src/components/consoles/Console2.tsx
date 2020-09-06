@@ -22,8 +22,16 @@ type ConsoleViewProperties = {
   console: ConsoleType;
   removeGame?: (consoleId: number, gameId: number) => void;
   addNewGame?: (consoleId: number, newGameName: string) => void;
-  changeGameDemate?: (gameId: number, isDemate: boolean) => void;
-  changeGameProgress?: (gameId: number, progress: number) => void;
+  changeGameDemate?: (
+    consoleId: number,
+    gameId: number,
+    isDemate: boolean
+  ) => void;
+  changeGameProgress?: (
+    consoleId: number,
+    gameId: number,
+    progress: number
+  ) => void;
 };
 
 const ConsoleView = (props: ConsoleViewProperties) => {
@@ -47,15 +55,8 @@ const ConsoleView = (props: ConsoleViewProperties) => {
   };
 
   const changeDemate = (gameId: number, isDemate: boolean) => {
-    console.log("Change isDemate " + isDemate + " for game " + gameId);
-
-    const updatedGames = [...games];
-    const gameToUpdate: GameType | undefined = updatedGames.find(
-      (game: GameType) => game.id === gameId
-    );
-    if (gameToUpdate) {
-      gameToUpdate.isDemate = isDemate;
-      //setGames(updatedGames);
+    if (props.changeGameDemate && consoleState) {
+      props.changeGameDemate(consoleState.id, gameId, isDemate);
     }
   };
 
@@ -127,11 +128,19 @@ const mapDispatchToProps = (dispatch: (gamesAction: GamesAction) => void) => {
     addNewGame: (consoleId: number, newGameName: string) => {
       dispatch(Actions.addNewGame(consoleId, newGameName));
     },
-    changeGameDemate: (gameId: number, isDemate: boolean) => {
-      dispatch(Actions.changeGameDemate(gameId, isDemate));
+    changeGameDemate: (
+      consoleId: number,
+      gameId: number,
+      isDemate: boolean
+    ) => {
+      dispatch(Actions.changeGameDemate(consoleId, gameId, isDemate));
     },
-    changeGameProgress: (gameId: number, progress: number) => {
-      dispatch(Actions.changeGameProgress(gameId, progress));
+    changeGameProgress: (
+      consoleId: number,
+      gameId: number,
+      progress: number
+    ) => {
+      dispatch(Actions.changeGameProgress(consoleId, gameId, progress));
     }
   };
 };

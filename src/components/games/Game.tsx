@@ -28,7 +28,7 @@ type GameViewProperties = {
 
 export const GameView = (props: GameViewProperties) => {
   const game: GameType = props.game;
-
+  const demate: boolean = game.isDemate;
   const handleChangeProgress = (
     event: React.ChangeEvent,
     newProgress: number
@@ -40,11 +40,8 @@ export const GameView = (props: GameViewProperties) => {
     //TODO
   };
 
-  const [demate, setDemate] = React.useState(game.isDemate);
-
   const toogleDemate = (gameId: number) => {
-    setDemate(!demate);
-    props.changeDemate(gameId, demate);
+    props.changeDemate(gameId, !demate);
   };
 
   return (
@@ -70,7 +67,7 @@ export const GameView = (props: GameViewProperties) => {
       />
 
       <IconButton onClick={() => toogleDemate(game.id)}>
-        <CloudQueueIcon color={demate ? "disabled" : "primary"} />
+        <CloudQueueIcon color={demate ? "primary" : "disabled"} />
       </IconButton>
 
       <IconButton onClick={() => props.deleteGame(game.id)}>

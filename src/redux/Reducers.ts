@@ -74,7 +74,20 @@ const consolesReducer = (
 
       break;
     case "CHANGE_GAME_DEMATE":
-      //TODO
+      {
+        let consoleToUpdate = newConsoles.find(
+          (console: ConsoleType) => console.id === gameAction.consoleId
+        );
+        if (consoleToUpdate) {
+          let gameToUpdate = consoleToUpdate.games.find(
+            (game: GameType) => game.id === gameAction.id
+          );
+
+          if (gameToUpdate && gameAction.isDemate !== undefined) {
+            gameToUpdate.isDemate = gameAction.isDemate;
+          }
+        }
+      }
       break;
     case "CHANGE_GAME_PROGRESS":
       // TODO

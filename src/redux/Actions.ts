@@ -38,17 +38,27 @@ const removeGame = (consoleId: number, gameId: number): GamesAction => {
   };
 };
 
-const changeGameDemate = (gameId: number, isDemate: boolean): GamesAction => {
+const changeGameDemate = (
+  consoleId: number,
+  gameId: number,
+  isDemate: boolean
+): GamesAction => {
   return {
     type: "CHANGE_GAME_DEMATE",
+    consoleId: consoleId,
     id: gameId,
     isDemate: isDemate
   };
 };
 
-const changeGameProgress = (gameId: number, progress: number): GamesAction => {
+const changeGameProgress = (
+  consoleId: number,
+  gameId: number,
+  progress: number
+): GamesAction => {
   return {
     type: "CHANGE_GAME_PROGRESS",
+    consoleId: consoleId,
     id: gameId,
     progress: progress
   };
