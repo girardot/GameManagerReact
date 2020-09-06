@@ -8,7 +8,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import VideogameAssetIcon from "@material-ui/icons/VideogameAsset";
 import React from "react";
-import { GameType } from "../games/Game";
+import { GameType } from "../games/GameType";
 import { GamesView } from "../games/Games";
 import Collapse from "@material-ui/core/Collapse";
 import { connect } from "react-redux";

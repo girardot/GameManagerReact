@@ -1,6 +1,7 @@
 import List from "@material-ui/core/List";
 import * as React from "react";
-import { GameType, GameView } from "./Game";
+import { GameView } from "../games/Game";
+import { GameType } from "../games/GameType";
 import { NewGameView } from "./NewGame";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";

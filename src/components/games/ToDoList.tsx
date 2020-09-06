@@ -1,6 +1,6 @@
 import List from "@material-ui/core/List";
 import * as React from "react";
-import { GameType } from "./Game";
+import { GameType } from "../games/GameType";
 import { ToDoView } from "./ToDo";
 
 type ToDoListViewProperties = {};

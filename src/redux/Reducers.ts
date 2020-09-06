@@ -1,5 +1,5 @@
 import { ConsoleType } from "../components/consoles/ConsoleType";
-import { GameType } from "../components/games/Game";
+import { GameType } from "../components/games/GameType";
 import { combineReducers } from "redux";
 import { ConsolesAction, GamesAction } from "./Actions";
 

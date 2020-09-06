@@ -7,16 +7,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import GameIcon from "@material-ui/icons/Games";
 import CloudQueueIcon from "@material-ui/icons/CloudQueue";
-
+import { GameType } from "../games/GameType";
 import * as React from "react";
-
-export type GameType = {
-  id: number;
-  name: string;
-  progress: number;
-  isDemate: boolean;
-  toDoOrder: number;
-};
 
 type GameViewProperties = {
   game: GameType;
