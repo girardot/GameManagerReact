@@ -66,7 +66,7 @@ const consolesReducer = (
           const gameIndexToRemove = consoleToUpdate.games.findIndex(
             (game: GameType) => game.id === gameAction.id
           );
-          if (gameIndexToRemove) {
+          if (gameIndexToRemove !== undefined) {
             consoleToUpdate.games.splice(gameIndexToRemove, 1);
           }
         }
