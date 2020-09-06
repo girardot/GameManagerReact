@@ -90,7 +90,20 @@ const consolesReducer = (
       }
       break;
     case "CHANGE_GAME_PROGRESS":
-      // TODO
+      {
+        let consoleToUpdate = newConsoles.find(
+          (console: ConsoleType) => console.id === gameAction.consoleId
+        );
+        if (consoleToUpdate) {
+          let gameToUpdate = consoleToUpdate.games.find(
+            (game: GameType) => game.id === gameAction.id
+          );
+
+          if (gameToUpdate && gameAction.progress !== undefined) {
+            gameToUpdate.progress = gameAction.progress;
+          }
+        }
+      }
       break;
     default:
       return consoles;

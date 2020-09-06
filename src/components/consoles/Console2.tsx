@@ -61,15 +61,8 @@ const ConsoleView = (props: ConsoleViewProperties) => {
   };
 
   const changeProgress = (gameId: number, progress: number) => {
-    console.log("Change progress " + progress + " for game " + gameId);
-
-    const updatedGames = [...games];
-    const gameToUpdate: GameType | undefined = updatedGames.find(
-      (game: GameType) => game.id === gameId
-    );
-    if (gameToUpdate) {
-      gameToUpdate.progress = progress;
-      // setGames(updatedGames);
+    if (props.changeGameProgress && consoleState) {
+      props.changeGameProgress(consoleState.id, gameId, progress);
     }
   };
 
